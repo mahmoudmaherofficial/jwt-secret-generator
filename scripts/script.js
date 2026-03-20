@@ -2,21 +2,33 @@ const generateBtn = document.getElementById("generateBtn");
 const copyBtn = document.getElementById("copyBtn");
 const secretOutput = document.getElementById("secretOutput");
 const secretLength = document.getElementById("secretLength");
+const includeSpecialChars = document.getElementById("includeSpecialChars");
 const lengthValue = document.getElementById("lengthValue");
 const statusMessage = document.getElementById("statusMessage");
+const currentYear = document.getElementById("currentYear");
 
-const CHARSET =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
+const LENGTH_OPTIONS = [32, 64, 128, 265, 512, 1024];
+const HEX_CHARSET = "0123456789abcdef";
+const SPECIAL_CHARSET =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&?";
 
 function updateLengthLabel() {
-  lengthValue.textContent = `${secretLength.value} chars`;
+  lengthValue.textContent = `${getSelectedLength()} chars`;
 }
 
-function generateSecret(length) {
-  const bytes = new Uint32Array(length);
+function getSelectedLength() {
+  return LENGTH_OPTIONS[Number(secretLength.value)];
+}
+
+function generateFromCharset(length, charset) {
+  const bytes = new Uint8Array(length);
   crypto.getRandomValues(bytes);
 
-  return Array.from(bytes, (value) => CHARSET[value % CHARSET.length]).join("");
+  return Array.from(bytes, (value) => charset[value % charset.length]).join("");
+}
+
+function generateHexSecret(length) {
+  return generateFromCharset(length, HEX_CHARSET);
 }
 
 function setStatus(message) {
@@ -24,11 +36,16 @@ function setStatus(message) {
 }
 
 generateBtn.addEventListener("click", () => {
-  const length = Number(secretLength.value);
-  const secret = generateSecret(length);
+  const length = getSelectedLength();
+  const useSpecialChars = includeSpecialChars.checked;
+  const secret = useSpecialChars
+    ? generateFromCharset(length, SPECIAL_CHARSET)
+    : generateHexSecret(length);
 
   secretOutput.value = secret;
-  setStatus(`Generated a ${length}-character JWT secret.`);
+  setStatus(
+    `Generated a ${length}-character JWT secret${useSpecialChars ? " with special characters." : " in lowercase hex format."}`
+  );
 });
 
 copyBtn.addEventListener("click", async () => {
@@ -48,3 +65,4 @@ copyBtn.addEventListener("click", async () => {
 secretLength.addEventListener("input", updateLengthLabel);
 
 updateLengthLabel();
+currentYear.textContent = new Date().getFullYear();

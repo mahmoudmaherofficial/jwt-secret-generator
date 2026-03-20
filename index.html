@@ -23,14 +23,28 @@
             <input
               id="secretLength"
               type="range"
-              min="32"
-              max="128"
-              step="16"
-              value="64"
+              min="0"
+              max="5"
+              step="1"
+              value="1"
+              list="lengthMarkers"
             />
+            <datalist id="lengthMarkers">
+              <option value="0" label="32"></option>
+              <option value="1" label="64"></option>
+              <option value="2" label="128"></option>
+              <option value="3" label="265"></option>
+              <option value="4" label="512"></option>
+              <option value="5" label="1024"></option>
+            </datalist>
             <span id="lengthValue">64 chars</span>
           </div>
         </div>
+
+        <label class="toggle">
+          <input id="includeSpecialChars" type="checkbox" />
+          <span>Include special characters</span>
+        </label>
 
         <div class="actions">
           <button id="generateBtn" type="button">Generate Secret</button>
@@ -46,6 +60,11 @@
 
         <p id="statusMessage" class="status" aria-live="polite">
           Ready to generate a new secret.
+        </p>
+
+        <p class="copyright">
+          Copyright &copy; <span id="currentYear"></span> JWT Secret Generator.
+          All rights reserved.
         </p>
       </section>
     </main>
