@@ -3,16 +3,72 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simple Structure</title>
-    <link rel="stylesheet" href="/styles/styles.css" />
+    <title>JWT Secret Generator</title>
+    <link rel="icon" href="/public/secret-key-10.png" />
+    <link rel="stylesheet" href="styles/styles.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Simple HTML, CSS, JS</h1>
-      <p>This is a basic starter structure.</p>
-      <button id="actionBtn">Click Me</button>
+    <main class="app-shell">
+      <section class="card">
+        <p class="eyebrow">Security Utility</p>
+        <h1>JWT Secret Generator</h1>
+        <p class="intro">
+          Generate a strong random secret in your browser using the Web Crypto
+          API.
+        </p>
+
+        <div class="controls">
+          <label for="secretLength">Secret length</label>
+          <div class="control-row">
+            <input
+              id="secretLength"
+              type="range"
+              min="0"
+              max="5"
+              step="1"
+              value="1"
+              list="lengthMarkers"
+            />
+            <datalist id="lengthMarkers">
+              <option value="0" label="32"></option>
+              <option value="1" label="64"></option>
+              <option value="2" label="128"></option>
+              <option value="3" label="265"></option>
+              <option value="4" label="512"></option>
+              <option value="5" label="1024"></option>
+            </datalist>
+            <span id="lengthValue">64 chars</span>
+          </div>
+        </div>
+
+        <label class="toggle">
+          <input id="includeSpecialChars" type="checkbox" />
+          <span>Include special characters</span>
+        </label>
+
+        <div class="actions">
+          <button id="generateBtn" type="button">Generate Secret</button>
+          <button id="copyBtn" type="button" class="secondary">Copy</button>
+        </div>
+
+        <label class="output-label" for="secretOutput">Generated secret</label>
+        <textarea
+          id="secretOutput"
+          readonly
+          placeholder="Your generated secret will appear here"
+        ></textarea>
+
+        <p id="statusMessage" class="status" aria-live="polite">
+          Ready to generate a new secret.
+        </p>
+
+        <p class="copyright">
+          Copyright &copy; <span id="currentYear"></span> JWT Secret Generator.
+          All rights reserved.
+        </p>
+      </section>
     </main>
 
-    <script src="/scripts/script.js"></script>
+    <script src="scripts/script.js"></script>
   </body>
 </html>
