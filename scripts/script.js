@@ -10,7 +10,7 @@ const currentYear = document.getElementById("currentYear");
 const LENGTH_OPTIONS = [32, 64, 128, 265, 512, 1024];
 const HEX_CHARSET = "0123456789abcdef";
 const SPECIAL_CHARSET =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&?";
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@$%&?";
 
 function updateLengthLabel() {
   lengthValue.textContent = `${getSelectedLength()} chars`;
